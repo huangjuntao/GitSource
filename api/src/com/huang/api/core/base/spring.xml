@@ -4,10 +4,10 @@
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
@@ -92,13 +92,31 @@
 		<aop:advisor advice-ref="druid-stat-interceptor"
 			pointcut-ref="druid-stat-pointcut" />
 		<!-- 配置哪些类的哪些方法参与事务 -->
-		<aop:advisor pointcut="execution(* com.biz..*.*(..))"
+		<aop:advisor pointcut="execution(* com.huang.api.modules.*.service..*.*(..))"
 			advice-ref="transactionAdvice" />
 	</aop:config>
 
+	<mvc:annotation-driven />
 	<context:component-scan base-package="com.huang.api.core.batabase.impl" />
+	<context:component-scan base-package="com.huang.api.modules.*.dao" />
+	<context:component-scan base-package="com.huang.api.modules.*.service" />
+	<context:component-scan base-package="com.huang.api.modules.*.controller" />
+	
+	<bean class="com.huang.api.core.util.InstantiationTracingBeanPostProcessor"></bean>
 
-	<!-- begin 此处设置用来直接访问静态资源文件 -->
+	
+
+	<!-- 视图解析器 -->
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/WEB-INF/classes/" suffix=".jsp" />
+	</mvc:view-resolvers>
+
+	<!-- 此处设置用来直接访问静态资源文件 -->
 	<mvc:default-servlet-handler />
+	<mvc:resources location="/static/" mapping="/static/**" />
+	
+	<mvc:interceptors>
+		<bean class="com.huang.api.core.util.HelperInterceptor" />
+	</mvc:interceptors>
 
 </beans>
