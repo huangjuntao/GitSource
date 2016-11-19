@@ -13,59 +13,72 @@ import javax.persistence.Table;
 public class SystemUser implements Serializable
 {
 
-    private static final long serialVersionUID = 6932445209498352642L;
+	private static final long serialVersionUID = 6932445209498352642L;
 
-    @Id
-    @Column(name = "C_ID", length = 30)
-    private String id;
+	@Id
+	@Column(name = "C_ID", length = 30)
+	private String id;
 
-    @Column(name = "C_USER_NAME")
-    private String userName;
+	@Column(name = "C_REAL_NAME")
+	private String realName;
 
-    @Column(name = "C_USER_PASSWD")
-    private String userpasswd;
+	@Column(name = "C_USER_NAME")
+	private String userName;
 
-    @Column(name = "C_CREATE_TIME")
-    private Date createTime;
+	@Column(name = "C_USER_PASSWD")
+	private String userpasswd;
 
-    public String getId()
-    {
-        return id;
-    }
+	@Column(name = "C_CREATE_TIME")
+	private Date createTime;
 
-    public void setId(String id)
-    {
-        this.id = id;
-    }
+	public String getId()
+	{
+		return id;
+	}
 
-    public String getUserName()
-    {
-        return userName;
-    }
+	public void setId(String id)
+	{
+		this.id = id;
+	}
 
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
-    }
+	public String getRealName()
+	{
+		return realName;
+	}
 
-    public String getUserpasswd()
-    {
-        return userpasswd;
-    }
+	public void setRealName(String realName)
+	{
+		this.realName = realName;
+	}
 
-    public void setUserpasswd(String userpasswd)
-    {
-        this.userpasswd = userpasswd;
-    }
+	public String getUserName()
+	{
+		return userName;
+	}
 
-    public Date getCreateTime()
-    {
-        return createTime;
-    }
+	public void setUserName(String userName)
+	{
+		this.userName = userName;
+	}
 
-    public void setCreateTime(Date createTime)
-    {
-        this.createTime = createTime;
-    }
+	public String getUserpasswd()
+	{
+		return userpasswd;
+	}
+
+	public void setUserpasswd(String userpasswd)
+	{
+		this.userpasswd = userpasswd;
+	}
+
+	public Date getCreateTime()
+	{
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime)
+	{
+		this.createTime = createTime;
+	}
 
 }

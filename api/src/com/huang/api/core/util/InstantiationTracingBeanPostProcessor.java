@@ -23,19 +23,20 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
 		{
 			logger.info("框架启动完成！准备启动用户认证体系....");
 
-//			final String SYS_ADMIN_USER = "SYS_AU";
-//			SystemUserService systemUserService = (SystemUserService) app.getBean("systemUserService");
-//			SystemUser systemUser = systemUserService.get(SYS_ADMIN_USER);
-//			if (systemUser == null)
-//			{
-//				systemUser = new SystemUser();
-//				systemUser.setId(SYS_ADMIN_USER);
-//				systemUser.setUserName("admin");
-//				systemUser.setUserpasswd("admin");
-//				systemUser.setCreateTime(new Date());
-//
-//				systemUserService.save(systemUser);
-//			}
+			final String SYS_ADMIN_USER = "SYS_AU";
+			SystemUserService systemUserService = (SystemUserService) app.getBean("systemUserService");
+			SystemUser systemUser = systemUserService.get(SYS_ADMIN_USER);
+			if (systemUser == null)
+			{
+				systemUser = new SystemUser();
+				systemUser.setId(SYS_ADMIN_USER);
+				systemUser.setRealName("管理员");
+				systemUser.setUserName("admin");
+				systemUser.setUserpasswd("admin");
+				systemUser.setCreateTime(new Date());
+
+				systemUserService.save(systemUser);
+			}
 		}
 	}
 

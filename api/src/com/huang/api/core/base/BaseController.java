@@ -17,7 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.huang.api.core.util.Helper;
 
-public class BaseController {
+public class BaseController
+{
 
 	private static Logger log = LogManager.getLogger(BaseController.class);
 
@@ -34,6 +35,11 @@ public class BaseController {
 	protected HttpSession getSession()
 	{
 		return Helper.getSession();
+	}
+
+	protected String getParameter(String parameter)
+	{
+		return Helper.getRequest().getParameter(parameter);
 	}
 
 	public ModelAndView outString(String string)
@@ -63,8 +69,7 @@ public class BaseController {
 	{
 		log.info("--------------------------------- Debug Parameters------------------------------------");
 
-		log.info("request url: {}{}, getParameters()。", getRequest().getContextPath(), getRequest()
-		                .getServletPath());
+		log.info("request url: {}{}, getParameters()。", getRequest().getContextPath(), getRequest().getServletPath());
 
 		Enumeration<?> enu = getRequest().getParameterNames();
 		Set<String> keySet = new HashSet<String>();
@@ -75,9 +80,7 @@ public class BaseController {
 			log.info("{}:{}", paraName, getRequest().getParameter(paraName));
 		}
 
-		log.info("");
-		log.info("");
-		// log.info("---------------------------------   Debug Finish  ------------------------------------");
+		log.info("---------------------------------   Debug Finish   ------------------------------------");
 	}
 
 	public ModelAndView actionMethodByName(String actionName)
@@ -88,8 +91,7 @@ public class BaseController {
 			Method method = this.getClass().getDeclaredMethod(actionName, new Class[] {});
 			if (method != null)
 			{
-				if (method.getReturnType() == ModelAndView.class
-				                && (method.getModifiers() & 1) == 1)
+				if (method.getReturnType() == ModelAndView.class && (method.getModifiers() & 1) == 1)
 				{
 
 					return (ModelAndView) method.invoke(this);
@@ -99,8 +101,7 @@ public class BaseController {
 		{
 			if (e.getClass() == NoSuchMethodException.class)
 			{
-				return outString("<PRE>方法调用时发生错误：\n没有这个方法: " + this.getClass().getSimpleName()
-				                + "." + actionName + "\n</PRE>");
+				return outString("<PRE>方法调用时发生错误：\n没有这个方法: " + this.getClass().getSimpleName() + "." + actionName + "\n</PRE>");
 			} else
 			{
 
