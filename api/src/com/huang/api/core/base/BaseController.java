@@ -17,98 +17,102 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.huang.api.core.util.Helper;
 
-public class BaseController {
+public class BaseController
+{
 
-	private static Logger log = LogManager.getLogger(BaseController.class);
+    private static Logger log = LogManager.getLogger(BaseController.class);
 
-	protected HttpServletRequest getRequest()
-	{
-		return Helper.getRequest();
-	}
+    protected HttpServletRequest getRequest()
+    {
+        return Helper.getRequest();
+    }
 
-	protected HttpServletResponse getResponse()
-	{
-		return Helper.getResponse();
-	}
+    protected HttpServletResponse getResponse()
+    {
+        return Helper.getResponse();
+    }
 
-	protected HttpSession getSession()
-	{
-		return Helper.getSession();
-	}
+    protected HttpSession getSession()
+    {
+        return Helper.getSession();
+    }
 
-	public ModelAndView outString(String string)
-	{
-		try
-		{
-			if (getResponse() == null)
-				return null;
-			getResponse().setContentType("text/html;charset=UTF-8");
-			PrintWriter out = getResponse().getWriter();
-			out.write(string);
-			out.flush();
-			out.close();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
-	}
+    protected String getParameter(String parameter)
+    {
+        return Helper.getRequest().getParameter(parameter);
+    }
 
-	public ModelAndView view(String path)
-	{
-		return new ModelAndView(path);
-	}
+    public ModelAndView outString(String string)
+    {
+        try
+        {
+            if (getResponse() == null)
+                return null;
+            getResponse().setContentType("text/html;charset=UTF-8");
+            PrintWriter out = getResponse().getWriter();
+            out.write(string);
+            out.flush();
+            out.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	public void debugOutputUrlParameters()
-	{
-		log.info("--------------------------------- Debug Parameters------------------------------------");
+    public ModelAndView view(String path)
+    {
+        return new ModelAndView(path);
+    }
 
-		log.info("request url: {}{}, getParameters()。", getRequest().getContextPath(), getRequest()
-		                .getServletPath());
+    public void debugOutputUrlParameters()
+    {
+        log.info("--------------------------------- Debug Parameters------------------------------------");
 
-		Enumeration<?> enu = getRequest().getParameterNames();
-		Set<String> keySet = new HashSet<String>();
-		while (enu.hasMoreElements())
-		{
-			String paraName = (String) enu.nextElement();
-			keySet.add(paraName);
-			log.info("{}:{}", paraName, getRequest().getParameter(paraName));
-		}
+        log.info("request url: {}{}, getParameters()。", getRequest().getContextPath(), getRequest().getServletPath());
 
-		log.info("");
-		log.info("");
-		// log.info("---------------------------------   Debug Finish  ------------------------------------");
-	}
+        Enumeration<?> enu = getRequest().getParameterNames();
+        Set<String> keySet = new HashSet<String>();
+        while (enu.hasMoreElements())
+        {
+            String paraName = (String) enu.nextElement();
+            keySet.add(paraName);
+            log.info("{}:{}", paraName, getRequest().getParameter(paraName));
+        }
 
-	public ModelAndView actionMethodByName(String actionName)
-	{
+        log.info("");
+        log.info("");
+        // log.info("--------------------------------- Debug Finish
+        // ------------------------------------");
+    }
 
-		try
-		{
-			Method method = this.getClass().getDeclaredMethod(actionName, new Class[] {});
-			if (method != null)
-			{
-				if (method.getReturnType() == ModelAndView.class
-				                && (method.getModifiers() & 1) == 1)
-				{
+    public ModelAndView actionMethodByName(String actionName)
+    {
 
-					return (ModelAndView) method.invoke(this);
-				}
-			}
-		} catch (Exception e)
-		{
-			if (e.getClass() == NoSuchMethodException.class)
-			{
-				return outString("<PRE>方法调用时发生错误：\n没有这个方法: " + this.getClass().getSimpleName()
-				                + "." + actionName + "\n</PRE>");
-			} else
-			{
+        try
+        {
+            Method method = this.getClass().getDeclaredMethod(actionName, new Class[] {});
+            if (method != null)
+            {
+                if (method.getReturnType() == ModelAndView.class && (method.getModifiers() & 1) == 1)
+                {
 
-				StringWriter sw = new StringWriter();
-				e.getCause().printStackTrace(new PrintWriter(sw));
-				return outString("<PRE>方法调用时发生错误：\n" + sw.toString() + "</PRE>");
-			}
-		}
-		return outString("方法调用时发生错误: " + this.getClass().getSimpleName() + "." + actionName);
-	}
+                    return (ModelAndView) method.invoke(this);
+                }
+            }
+        } catch (Exception e)
+        {
+            if (e.getClass() == NoSuchMethodException.class)
+            {
+                return outString("<PRE>方法调用时发生错误：\n没有这个方法: " + this.getClass().getSimpleName() + "." + actionName + "\n</PRE>");
+            } else
+            {
+
+                StringWriter sw = new StringWriter();
+                e.getCause().printStackTrace(new PrintWriter(sw));
+                return outString("<PRE>方法调用时发生错误：\n" + sw.toString() + "</PRE>");
+            }
+        }
+        return outString("方法调用时发生错误: " + this.getClass().getSimpleName() + "." + actionName);
+    }
 }

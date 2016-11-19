@@ -9,17 +9,23 @@ import com.huang.api.modules.system.model.SystemUser;
 @Service
 public class SystemUserService
 {
-	@Autowired
-	private SystemUserDao systemUserDao;
+    @Autowired
+    private SystemUserDao systemUserDao;
 
-	public SystemUser get(String id)
-	{
-		return systemUserDao.get(id);
-	}
+    public SystemUser get(String id)
+    {
+        return systemUserDao.get(id);
+    }
 
-	public void save(SystemUser systemUser)
-	{
-		systemUserDao.save(systemUser);
-	}
+    public void save(SystemUser systemUser)
+    {
+        systemUserDao.save(systemUser);
+    }
+
+    public SystemUser findByUserName(String userName)
+    {
+        String hql = "from SystemUser where userName=?";
+        return systemUserDao.getByHQL(hql, userName);
+    }
 
 }
