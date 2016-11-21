@@ -22,6 +22,14 @@ body{
 	background: #008ead;
 	width: 100%;
 	height: 400px;
+	text-align: center;
+	padding-top: 130px;
+	color: white;
+	font-size: 27px;
+}
+.top_div .version{
+	font-size: 13px;
+	padding-left: 290px;
 }
 .ipt{
 	border: 1px solid #d3d3d3;
@@ -33,7 +41,8 @@ body{
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 	-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
 	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	box-sizing: content-box;
 }
 .ipt:focus{
 	border-color: #66afe9;
@@ -151,9 +160,13 @@ $(function(){
 			uPasswd: $("#txtSysPassword").val()
 		},function(data){
 			if(data.sucess){
-				window.location.href = "auth/manage";
+				var wait = 3000;
+				$.alertMsg("登录成功，正在进入系统中...", wait);
+				window.setTimeout(function(){
+					window.location.href = "auth/manage";
+				},wait);
 			}else{
-				$.alertMsg(data.error, 3000);
+				$.alertMsg(data.error, 2000);
 			}
 		},"json");
 	});
@@ -161,18 +174,21 @@ $(function(){
 </script>
 </head>
 <body>
-	<div class="top_div"></div>
+	<div class="top_div">
+		Api Admin System
+		<div class="version">V1.0</div>
+	</div>
 	<div style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 200px; text-align: center;">
 		<div style="width: 165px; height: 96px; position: absolute;">
 			<div class="tou"></div>
 			<div class="initial_left_hand" id="left_hand"></div>
 			<div class="initial_right_hand" id="right_hand"></div>
 		</div>
-		<p style="padding: 30px 0px 10px; position: relative;">
+		<p style="padding: 30px 0px 10px; position: relative; margin: 0 0 0 0;">
 			<span class="u_logo"></span>
 			<input class="ipt" id="txtSysUserName" type="text" placeholder="请输入用户名或邮箱" value="" />
 		</p>
-		<p style="position: relative;">
+		<p style="position: relative; margin: 0 0 0 0;">
 			<span class="p_logo"></span>
 			<input class="ipt" id="txtSysPassword" type="password" placeholder="请输入密码" value="" />
 		</p>
