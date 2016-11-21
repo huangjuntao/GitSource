@@ -68,7 +68,6 @@ public class BaseController
 	public void debugOutputUrlParameters()
 	{
 		log.info("--------------------------------- Debug Parameters------------------------------------");
-
 		log.info("request url: {}{}, getParameters()。", getRequest().getContextPath(), getRequest().getServletPath());
 
 		Enumeration<?> enu = getRequest().getParameterNames();
@@ -80,12 +79,11 @@ public class BaseController
 			log.info("{}:{}", paraName, getRequest().getParameter(paraName));
 		}
 
-		log.info("---------------------------------   Debug Finish   ------------------------------------");
+		log.info("--------------------------------- Debug Finish ------------------------------------");
 	}
 
 	public ModelAndView actionMethodByName(String actionName)
 	{
-
 		try
 		{
 			Method method = this.getClass().getDeclaredMethod(actionName, new Class[] {});
@@ -93,7 +91,6 @@ public class BaseController
 			{
 				if (method.getReturnType() == ModelAndView.class && (method.getModifiers() & 1) == 1)
 				{
-
 					return (ModelAndView) method.invoke(this);
 				}
 			}
