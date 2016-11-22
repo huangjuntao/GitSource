@@ -175,7 +175,7 @@ $(function(){
 </head>
 <body>
 	<div class="top_div">
-		Api Admin System
+		API Admin System
 		<div class="version">V1.0</div>
 	</div>
 	<div style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 200px; text-align: center;">
